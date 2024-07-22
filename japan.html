@@ -1,0 +1,315 @@
+<!doctype html>
+<html>
+<head>
+  <style>
+    body { margin: 0 }
+    .map { width: 100%; height: 100vh }
+  </style>
+</head>
+<body>
+  <section id="map" class="map"></section>
+
+  <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+    ({key: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg", v: "weekly"});</script>
+
+  <script type="application/json" id="mapStyles">
+    [
+      {
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#242f3e"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#746855"
+          }
+        ]
+      },
+      {
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#242f3e"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.locality",
+        "elementType": "labels",
+        "stylers": [
+          {
+            "visibility": "on"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.locality",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#d59563"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#d59563"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#263c3f"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.park",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#6b9a76"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#38414e"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#212a37"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#9ca5b3"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#746855"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#1f2835"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#f3d19c"
+          }
+        ]
+      },
+      {
+        "featureType": "transit",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#2f3948"
+          }
+        ]
+      },
+      {
+        "featureType": "transit",
+        "elementType": "labels.text",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "transit.station",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#d59563"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#17263c"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+          {
+            "color": "#515c6d"
+          }
+        ]
+      },
+      {
+        "featureType": "water",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#17263c"
+          }
+        ]
+      }
+    ]
+  </script>
+
+  <script>
+    const places = [
+      { title: "Tokyo Tower", position: { lat: 35.6585848, lng: 139.742858 }, color: "darkgreen" },
+      { title: "Sanrio Puroland", position: { lat: 35.62454983762559, lng: 139.42927645907173 }, color: "blue" },
+      { title: "Hard off & hobby off", position: { lat: 35.64356666409928, lng: 139.42950629740199 } },
+      { title: "Closet child Shinjuku 4th floor - Mode off ueno", position: { lat: 35.69423377922856, lng: 139.69818075329442 } },
+      { title: "Yoyogi park", position: { lat: 35.67018689623549, lng: 139.69527673136707 }, color: "darkgreen" },
+      { title: "Shiba park", position: { lat: 35.65526412404206, lng: 139.74699123130847 }, color: "darkgreen" },
+      { title: "Nezu shrine", position: { lat: 35.72026443013045, lng: 139.76120967740655 }, color: "darkgreen" },
+      { title: "Meiji jingu", position: { lat: 35.679792029776216, lng: 139.69619115085783 }, color: "blue" },
+      { title: "Kinchakuda - hiking", position: { lat: 35.8840780023316, lng: 139.30912886999712 }, color: "blue" },
+      { title: "Jojo café", position: { lat: 35.7084192041368, lng: 139.6688990219178 } },  //  Might be the wrong place.
+      { title: "Gold's Gym Hamamatsu-cho", position: { lat: 35.65699908155742, lng: 139.7590516197301 }, color: "gold" },
+      { title: "Ghibli museum", position: { lat: 35.696550263936466, lng: 139.5730061734504 }, color: "blue" },
+      { title: "Sunshine City", position: { lat: 35.729181294623544, lng: 139.71877651325954 }, color: "blue" },
+
+      { title: "PinocchioP 7月28日（日）＠Zepp Sapporo", position: { lat: 43.04968283561719, lng: 141.35380719472334 }, color: "lightblue", oob: true },
+      { title: "PinocchioP 8月3日（土）＠Zepp Namba", position: { lat: 34.67333449779137, lng: 135.56371053529497 }, color: "lightblue", oob: true },
+      { title: "PinocchioP 8月4日（日）＠Zepp Nagoya", position: { lat: 35.18075333731876, lng: 136.96026259092002 }, color: "lightblue", oob: true },
+      { title: "PinocchioP 8月16日（金）＠Zepp Fukuoka", position: { lat: 33.59367622740051, lng: 130.3636147078742 }, color: "lightblue", oob: true },
+      { title: "PinocchioP 8月23日（金）＠豊洲PIT", position: { lat: 35.64982402765631, lng: 139.78882620794136 }, color: "lightblue", oob: true },
+
+      // { title: "Don quijote", position: {} },  // They're everywhere.
+      // { title: "every Daiso in the area", position: {} },  // They're everywhere.
+      // { title: "beach", position: {} },  // Not in Tokyo you don't.
+      // { title: "private onsen", position: {} },  // They're everywhere.
+      // { title: "Jojo ramen", position: {} },  // Where?
+      // { title: "stores with electronics", position: {} },  // They're everywhere.
+
+      // Blazey's stuff.  (Also gosh dang Blaze is beautiful).
+      { title: "teamLab Planets", position: { lat: 35.6488328, lng: 139.7902168 }, color: "pink" },
+      { title: "Okinawa beach", position: { lat: 26.1784194, lng: 127.8303812 }, color: "pink", oob: true },
+      { title: "Disneyland", position: { lat: 35.63289761071856, lng: 139.8803764235997 }, color: "pink" },
+      { title: "Kiddy Land", position: { lat: 35.66773314031596, lng: 139.70654586020228 }, color: "deeppink" },
+      { title: "Kiddy Land", position: { lat: 35.72910717772364, lng: 139.71946081848313 }, color: "deeppink" },
+      { title: "Kiddy Land", position: { lat: 35.704852891025794, lng: 139.57948438074652 }, color: "deeppink" },
+      { title: "Kiddy Land", position: { lat: 35.612306390433346, lng: 139.62832338215622 }, color: "deeppink" },
+      { title: "Studio Ghibli park", position: { lat: 35.17507995157246, lng: 137.0887688969417 }, color: "pink", oob: true },
+      { title: "Nara Deer park", position: { lat: 34.68501100727505, lng: 135.8429737595325 }, color: "pink", oob: true },
+    ]
+    ;(async () => {
+      const { Map } = await google.maps.importLibrary("maps")
+      const { Marker } =
+        await google.maps.importLibrary("marker")
+      const map = new Map(
+        document.getElementById("map"),
+        { styles: JSON.parse(document.getElementById("mapStyles").innerHTML) },
+      )
+
+      var pinColor = "#FFFFFF";
+      var pinLabel = "A";
+
+      // Pick your pin (hole or no hole)
+      var pinSVGHole = "M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z";
+      var labelOriginHole = new google.maps.Point(12,15);
+      var pinSVGFilled = "M 12,2 C 8.1340068,2 5,5.1340068 5,9 c 0,5.25 7,13 7,13 0,0 7,-7.75 7,-13 0,-3.8659932 -3.134007,-7 -7,-7 z";
+      var labelOriginFilled =  new google.maps.Point(12,9);
+
+      const bounds = { north: null, east: null, south: null, west: null }
+      for (const {
+        title,
+        position,
+        filled = true,
+        color = "#CC0000",
+        fillColor = color,
+        strokeColor = color,
+        oob = false,
+      } of places) {
+        // I swear this shit is backwards.
+        if (!oob) {
+          if (bounds.south === null) bounds.south = position.lat
+          if (bounds.north === null) bounds.north = position.lat
+          if (bounds.west === null) bounds.west = position.lng
+          if (bounds.east === null) bounds.east = position.lng
+
+          bounds.south = Math.min(bounds.south, position.lat)
+          bounds.north = Math.max(bounds.north, position.lat)
+          bounds.west = Math.min(bounds.west, position.lng)
+          bounds.east = Math.max(bounds.east, position.lng)
+        }
+
+        const m = new Marker({
+          map,
+          position,
+          title,
+          icon: {
+            path: filled ? pinSVGFilled : pinSVGHole,
+            anchor: new google.maps.Point(12,17),
+            fillOpacity: 1,
+            fillColor,
+            strokeWeight: 2,
+            strokeColor,
+            scale: 2,
+            labelOrigin: labelOriginFilled
+          },
+        })
+      }
+
+      map.fitBounds(bounds)
+    })()
+  </script>
+</body>
+</html>
